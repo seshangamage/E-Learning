@@ -19,3 +19,34 @@
 *.tmp
 *.bak
 *.swp
+
+
+# Ignore Maven's target directory
+/target/
+
+# Ignore temporary files created by Maven
+dependency-reduced-pom.xml
+release.properties
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+# Include this if you use Jenkins
+pom.xml.versionsBackupByJenkins
+
+# Ignore IntelliJ IDEA files (if you're using it)
+/.idea/
+/*.iml
+
+# Eclipse project files (if applicable)
+.project
+.classpath
+.settings/
+
+# NetBeans project files (if applicable)
+/nbproject/private/
+/nbproject/build-impl.xml
+
+# OS-specific files
+.DS_Store
+Thumbs.db
