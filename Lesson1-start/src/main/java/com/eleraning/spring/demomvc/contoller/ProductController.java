@@ -46,7 +46,7 @@ public class ProductController {
     @PostMapping("/create")
     public String createProdcut(@Valid @ModelAttribute ProductDto productDto,BindingResult result) {
         if(productDto.getImageFile() == null || productDto.getImageFile().isEmpty()){
-            result.addError(new FieldError("prodcutDto", "imageFile", "The Image file isn empty"));
+            result.addError(new FieldError("prodcutDto", "imageFile", "The Image file is empty"));
         }
         if(result.hasErrors()){
             return "products/createProdcut";
