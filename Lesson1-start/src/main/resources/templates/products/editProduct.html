@@ -1,0 +1,73 @@
+<div class="container mt-5">
+    <form th:action="@{/products/edit(id=${product.id})}" method="post" enctype="multipart/form-data" th:object="${productDto}" class="row g-3">
+        <!-- Product ID -->
+        <div class="col-md-6">
+            <label for="id1" class="form-label">Product ID</label>
+            <input readonly type="text" id="id1" th:value="${product.id}" class="form-control">
+        </div>
+
+        <!-- Product Name -->
+        <div class="col-md-6">
+            <label for="name" class="form-label">Product Name</label>
+            <input type="text" id="name" th:field="*{name}" class="form-control">
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></p>
+        </div>
+
+        <!-- Brand -->
+        <div class="col-md-6">
+            <label for="brand" class="form-label">Brand</label>
+            <input type="text" id="brand" th:field="*{brand}" class="form-control">
+            <p th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}" class="text-danger"></p>
+        </div>
+
+        <!-- Category -->
+        <div class="col-md-6">
+            <label for="category" class="form-label">Category</label>
+            <select id="category" class="form-select" th:field="*{category}">
+                <option value="printer">Printer</option>
+                <option value="laptop">Laptop</option>
+                <option value="laptop-parts">Laptop-parts</option>
+                <option value="pc">PC</option>
+                <option value="pc-parts">PC-parts</option>
+                <option value="accessories">Accessories</option>
+            </select>
+        </div>
+
+        <!-- Price -->
+        <div class="col-md-6">
+            <label for="price" class="form-label">Price</label>
+            <input type="text" id="price" th:field="*{price}" class="form-control">
+            <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger"></p>
+        </div>
+
+        <div class="col-md-6">
+            <label for="image" class="form-label">Product Current Image</label>
+            <img th:src="@{'/images/'+${product.imageFileName}}" width="150">
+        </div>
+
+        <div class="col-md-6">
+            <label for="date" class="form-label">Product Created Date</label>
+            <input readonly type="text" id="date" th:value="${product.createdAt}" class="form-control">
+        </div>
+
+        <!-- New Image File -->
+        <div class="col-md-6">
+            <label for="imageFile" class="form-label">Image File</label>
+            <input type="file" id="imageFile" name="imageFile" th:field="*{imageFile}" class="form-control">
+            <p th:if="${#fields.hasErrors('imageFile')}" th:errors="*{imageFile}" class="text-danger"></p>
+        </div>
+
+        <!-- Description -->
+        <div class="col-md-6">
+            <label for="description" class="form-label">Description</label>
+            <input type="text" id="description" th:field="*{description}" class="form-control">
+            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger"></p>
+        </div>
+
+        <!-- Buttons -->
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Submit</button>
+            <a class="btn btn-secondary ms-2" href="/products">Cancel</a>
+        </div>
+    </form>
+</div>

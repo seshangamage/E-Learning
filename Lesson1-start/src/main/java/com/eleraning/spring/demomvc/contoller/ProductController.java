@@ -1,5 +1,6 @@
 package com.eleraning.spring.demomvc.contoller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -27,6 +28,10 @@ import com.eleraning.spring.demomvc.services.ProductRepository;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
 
 
 
@@ -90,6 +95,69 @@ public class ProductController {
         product.setImageFileName(storageFileName);
         prodcutRepo.save(product);
     
+        return "redirect:/products";
+    }
+
+    @GetMapping("/edit")
+    public String getEditProductPage(Model model , @RequestParam int id) {
+        try{
+            Product product = prodcutRepo.findById(id).get();
+            model.addAttribute("product", product);
+
+            ProductDto productDto = new ProductDto();
+            productDto.setName(product.getName());
+            productDto.setBrand(product.getBrand());
+            productDto.setCategory(product.getCategory());
+            productDto.setPrice(product.getPrice());
+            productDto.setDescription(product.getDescription());
+            model.addAttribute("productDto", productDto);
+        }
+        catch(Exception e){
+
+        }
+        return "products/editProduct";
+    }
+    
+
+    
+    @PostMapping("/edit")
+    public String updateProduct(@Valid @ModelAttribute ProductDto productDto , @RequestParam int id , BindingResult result , Model model) {
+
+        try{
+            Product product = prodcutRepo.findById(id).get();
+            model.addAttribute("product",product);
+            if(result.hasErrors()){
+                return "products/editProduct";
+            }
+            if(!(productDto.getImageFile() == null || productDto.getImageFile().isEmpty())){
+                try{
+                    Files.delete(Paths.get(uploadLocation + product.getImageFileName()));
+                    try {
+                        Date createdAt = new Date();
+                        String storageFileName = createdAt.getTime() + "_" + productDto.getImageFile().getOriginalFilename();
+                        InputStream inputStream = productDto.getImageFile().getInputStream();
+                        Files.copy(inputStream, Paths.get(uploadLocation, storageFileName), StandardCopyOption.REPLACE_EXISTING);
+                        product.setImageFileName(storageFileName);
+                        product.setName(productDto.getName());
+                        product.setBrand(productDto.getBrand());
+                        product.setCategory(productDto.getCategory());
+                        product.setPrice(productDto.getPrice());
+                        product.setDescription(productDto.getDescription());
+                        prodcutRepo.save(product);
+                    }
+                    catch(Exception e){
+
+                    }
+                }
+                catch(Exception e){
+
+                }
+            }
+
+        }
+        catch(Exception e){
+
+        }
         return "redirect:/products";
     }
     
