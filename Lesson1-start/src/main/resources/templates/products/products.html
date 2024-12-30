@@ -46,12 +46,14 @@
       <td>
         <button 
           class="btn btn-danger" 
-          th:attr="hx-delete='/products/delete?id=' + ${product.id}"
+          th:attr="hx-delete=@{'/products/delete?id=' + ${product.id}}"
           hx-confirm="Are you sure you want to delete this item?" 
           hx-target="closest tr" 
-          hx-swap="outerHTML">
+          hx-swap="outerHTML"
+          hx-on="htmx:afterRequest: window.location.reload()">
           Delete
         </button>
+    
         <button 
           class="btn btn-primary" 
           th:attr="hx-get='/products/edit?id=' + ${product.id}"

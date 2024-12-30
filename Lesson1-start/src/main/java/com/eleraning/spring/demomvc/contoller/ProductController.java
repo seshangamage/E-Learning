@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -160,6 +161,22 @@ public class ProductController {
         }
         return "redirect:/products";
     }
+
+    @DeleteMapping("/delete")
+    public String deleteProduct(@RequestParam int id , Model model) {
+        try{
+            Product product = prodcutRepo.findById(id).get();
+            Path imagPath = Paths.get(uploadLocation,product.getImageFileName());
+            Files.delete(imagPath);
+            prodcutRepo.delete(product);
+
+        }
+        catch(Exception e){
+
+        }
+        return "redirect:/products";
+    }
+    
     
     
     
