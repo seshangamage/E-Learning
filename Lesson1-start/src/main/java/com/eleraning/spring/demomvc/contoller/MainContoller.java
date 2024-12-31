@@ -1,18 +1,27 @@
 package com.eleraning.spring.demomvc.contoller;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.eleraning.spring.demomvc.model.Product;
+import com.eleraning.spring.demomvc.services.ProductRepository;
+
 @Controller
 public class MainContoller {
+
+    @Autowired
+    private ProductRepository prodcutRepo;
 
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("now", LocalDateTime.now().toString());
+        List<Product> productList = prodcutRepo.findAll();
+        model.addAttribute("products", productList);
         return "index";
     }
     
