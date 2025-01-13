@@ -1,5 +1,5 @@
 <div class="container mt-5">
-    <form th:action="@{/products/edit(id=${product.id})}" method="post" enctype="multipart/form-data" th:object="${productDto}" class="row g-3">
+    <form action="/products/edit?id='+ ${product.id}" method="post" enctype="multipart/form-data" th:object="${productDto}" class="row g-3">
         <!-- Product ID -->
         <div class="col-md-6">
             <label for="id1" class="form-label">Product ID</label>
