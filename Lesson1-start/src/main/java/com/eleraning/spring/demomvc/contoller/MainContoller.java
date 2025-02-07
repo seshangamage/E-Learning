@@ -1,6 +1,5 @@
 package com.eleraning.spring.demomvc.contoller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +23,4 @@ public class MainContoller {
         model.addAttribute("products", productList);
         return "index";
     }
-    
 }
